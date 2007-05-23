@@ -1,0 +1,30 @@
+Catalyst/Engine/Wx
+===============================
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+MORE INFO
+
+This is the Catalyst engine specialized for building non-blocking and
+multi-platforms desktop applications with the Catalyst framework. It
+allows to tie Wx events to Catalyst controllers asychronously (thank you
+POE).
+
+Hopefully it will make possible to re-use the Models and Controllers
+of a Catalyst web application when you want to build a desktop application.
+
+Hopefully it will also make possible the opposite.
+
+Anyway, there is no sample application yet so you can see how things goes with
+the tests.
+
+Thanks for your comments.
+
+Eriam
