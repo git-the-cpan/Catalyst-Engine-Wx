@@ -2,6 +2,7 @@ package Catalyst::View::Wx;
 
 use warnings;
 use strict;
+no strict 'refs';
 
 use base qw/Catalyst::View/;
 
@@ -9,7 +10,7 @@ use NEXT;
 use Class::Inspector;
 use Data::Dumper;
 
-our $VERSION = '0.1';
+our $VERSION = '0.02';
 
 =head1 NAME
 
@@ -35,23 +36,28 @@ sub new {
 sub process {
    my ($self, $c) = @_;
    
-   my $module = $c->stash->{class} || $c->action;
-   $module =~ s/\//::/g;
+   $c->stash->{'_displayed'} ||= 0;
    
-   if (defined $self->config->{NAMESPACE}) {
-      $module = $self->config->{NAMESPACE}.'::'.$module;
-   }
+   if ($c->stash->{'_displayed'} != 1) {
+      
+      my $module = $c->stash->{class} || $c->action;
+      $module =~ s/\//::/g;
+      
+      if (defined $self->config->{NAMESPACE}) {
+         $module = $self->config->{NAMESPACE}.'::'.$module;
+      }
+      
+      unless (Class::Inspector->loaded($module)) {
+         require Class::Inspector->filename($module);
+      }
+      
+      if (my $code = $module->can('new')) {
+         $code->($module, @_);
+      }
    
-   unless (Class::Inspector->loaded($module)) {
-      require Class::Inspector->filename($module);
+      $c->stash->{'_displayed'} = 1;
    }
-   
-   if (my $code = $module->can('new') ) {
-      $code->($module, @_);
-   }
-
-#   $c->stash->{_displayed} = 1;
-   return 1; 
+   return; 
 }
 
 sub DESTROY {
