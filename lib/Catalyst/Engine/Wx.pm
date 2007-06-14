@@ -13,7 +13,7 @@ use Data::Dumper;
 use IO::String;
 use URI;
 
-our $VERSION = "0.02";
+our $VERSION = "0.02_01";
 
 my $uri_proto = URI->new();
 my $app;

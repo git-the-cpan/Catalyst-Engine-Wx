@@ -8,9 +8,10 @@ use base qw/Catalyst::View/;
 
 use NEXT;
 use Class::Inspector;
+use Module::Reload; 
 use Data::Dumper;
 
-our $VERSION = '0.02';
+our $VERSION = '0.01_01';
 
 =head1 NAME
 
@@ -45,6 +46,10 @@ sub process {
       
       if (defined $self->config->{NAMESPACE}) {
          $module = $self->config->{NAMESPACE}.'::'.$module;
+      }
+      
+      if ($ENV{CATALYST_DEBUG}) {
+         Module::Reload->check;
       }
       
       unless (Class::Inspector->loaded($module)) {
