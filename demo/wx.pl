@@ -8,12 +8,15 @@ BEGIN {
 
 use strict;
 use warnings;
+use Catalyst::Log::Wx;
 
 require SampleApp;
 
 SampleApp->config(
    name        => 'SampleApp',
 );
+
+SampleApp->log(Catalyst::Log::Wx->new);
 
 SampleApp->setup;
 

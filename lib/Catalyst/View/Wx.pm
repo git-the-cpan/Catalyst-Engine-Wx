@@ -57,7 +57,8 @@ sub process {
       }
       
       if (my $code = $module->can('new')) {
-         $code->($module, @_);
+         eval { $code->($module, @_); };
+         print $@ if $@;
       }
    
       $c->stash->{'_displayed'} = 1;

@@ -1,8 +1,8 @@
 Changes
-demo/db.sql
 demo/lib/MyAppDB.pm
 demo/lib/SampleApp.pm
 demo/lib/SampleApp/Controller/Root.pm
+demo/lib/SampleApp/Controller/Test/And.pm
 demo/lib/SampleApp/Model/SampleAppDB.pm
 demo/lib/SampleApp/View/Wx.pm
 demo/lib/SampleAppDB.pm
@@ -10,6 +10,7 @@ demo/lib/SampleAppDB/Author.pm
 demo/lib/SampleAppDB/Book.pm
 demo/lib/SampleAppDB/BookAuthor.pm
 demo/lib/SampleAppWx/default.pm
+demo/lib/SampleAppWx/display.pm
 demo/sampleapp.db
 demo/wx.pl
 inc/Module/Install.pm
@@ -22,7 +23,9 @@ inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Catalyst/Engine/Wx.pm
 lib/Catalyst/Engine/Wx/Event.pm
+lib/Catalyst/Log/Wx.pm
 lib/Catalyst/View/Wx.pm
+lib/Catalyst/View/WxHtmlEasyPrinting.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml

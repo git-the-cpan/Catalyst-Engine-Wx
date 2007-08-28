@@ -33,6 +33,13 @@ sub event_with_params : Local {
     $c->stash->{class} = 'shutdown'; 
 }
 
+sub shutdown : Local {
+    my ( $self, $c ) = @_;
+    
+
+#    $c->stash->{class} = 'shutdown'; 
+}
+
 sub forward : Local {
     my ( $self, $c ) = @_;
     

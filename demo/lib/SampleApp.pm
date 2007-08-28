@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Catalyst::Runtime '5.70';
-use Catalyst;
+use Catalyst qw/-Debug/;
 
 our $VERSION = '0.01';
 

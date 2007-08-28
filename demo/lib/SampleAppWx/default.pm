@@ -4,7 +4,11 @@ use strict;
 use warnings;
 
 use Wx ':everything';
-use Catalyst::Engine::Wx::Event qw(EVT EVT_QUIT EVT_CLOSE);
+use Catalyst::Engine::Wx::Event qw(
+   EVT_QUIT
+   EVT_CLOSE
+   EVT_LIST_ITEM_ACTIVATED
+);
 
 use base 'Wx::Frame';
 
@@ -42,9 +46,14 @@ sub new {
    $list_ctrl->SetColumnWidth(0, -1);
    $list_ctrl->SetColumnWidth(2, -1);
    
+   Wx::LogMessage( "Welcome to Catalyst::Engine::Wx !" );
+   
+   EVT_LIST_ITEM_ACTIVATED( $self, $list_ctrl, 'Test::And->display' );
    EVT_CLOSE( $self, sub { EVT_QUIT; } );
    
    return 1;
 }
+
+
 
 1;

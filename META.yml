@@ -1,21 +1,22 @@
---- 
+---
 abstract: Catalyst wxPerl Engine
-author: Eriam Schaffter <eriam@cpan.org>
+author: 'Eriam Schaffter <eriam@cpan.org>'
 distribution_type: module
 generated_by: Module::Install version 0.65
 license: perl
-meta-spec: 
+meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.3.html
   version: 1.3
 name: Catalyst-Engine-Wx
-no_index: 
-  directory: 
+no_index:
+  directory:
     - inc
     - t
-requires: 
+requires:
   Alien::wxWidgets: 0
+  Catalyst: 0
   Class::Inspector: 0
+  Module::Reload: 0
   POE: 0.38
-  POE::Loop::Wx: 0
   Wx: 0
-version: 0.02_01
+version: 0.02_02

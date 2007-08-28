@@ -22,8 +22,8 @@ of a Catalyst web application when you want to build a desktop application.
 
 Hopefully it will also make possible the opposite.
 
-Anyway, there is no sample application yet so you can see how things goes with
-the tests.
+There is now a demo application, you can run it and see how it behaves. 
+It is loosely inspired by the tutorial of Catalyst on CPAN.
 
 Thanks for your comments.
 

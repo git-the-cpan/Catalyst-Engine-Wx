@@ -1,5 +1,12 @@
+use strict;
+use Test::More;
 
-use Test::More tests => 8;
+BEGIN {
+    eval { require Wx; };
+    plan skip_all => 'Wx required for this module' if $@;
+}
+
+plan tests => 7;
 
 BEGIN { 
     use lib "t/lib/";

@@ -13,13 +13,20 @@ use Data::Dumper;
 use IO::String;
 use URI;
 
-our $VERSION = "0.02_01";
+our $VERSION = "0.02_02";
 
 my $uri_proto = URI->new();
 my $app;
    
 use base 'Catalyst::Engine';
 use Errno 'EWOULDBLOCK';
+
+sub new {
+   my ( $class ) = @_;
+   
+   $class->SUPER::new();
+}
+
 
 sub run {
    my ( $self, $class, $options ) = @_;
@@ -42,20 +49,22 @@ sub run {
                
                $kernel->alias_set('catalyst-wxperl');
                         
-               POE::Kernel->post('catalyst-wxperl', '_KEEPALIVE');
+               POE::Kernel->post('catalyst-wxperl', '_keepalive');
                POE::Kernel->post('catalyst-wxperl', '_PULSE');
             },
-         _KEEPALIVE  => sub {
-               $_[KERNEL]->delay('_KEEPALIVE', 20);
+         _keepalive  => sub {
+               $_[KERNEL]->delay('_keepalive', 20);
             },
          _stop       => sub {
-               $_[KERNEL]->delay('_KEEPALIVE');
+               $_[KERNEL]->delay('_keepalive');
             }
       }
    );
 
+   my $locale = Wx::Locale->new( Wx::Locale::GetSystemLanguage );
+   Wx::InitAllImageHandlers();
    $app = Wx::SimpleApp->new;
-
+    
    POE::Kernel->loop_run();
    POE::Kernel->run();
 }
@@ -70,6 +79,7 @@ sub _PULSE {
 
 sub EVENT_REQUEST {
    my ($self, $kernel, $heap, $session, $request) = @_[OBJECT, KERNEL, HEAP, SESSION, ARG0];
+   
    $heap->{'class'}->handle_request($request);
 }
 
@@ -77,7 +87,19 @@ sub prepare {
    my ( $self, $c, $request ) = @_;
    
    my $controller = $request->{'controller'} || '/';
+
+   if ($controller =~ /\->/) {
+      $controller =~ s/^Root//g 
+         if $controller =~ /^Root/;
+         
+      $controller =~ s/\->/\//g;
+      $controller =~ s/::/\//g;
+      $controller = lc($controller);
+   }
    
+   $controller = '/'.$controller
+      if ($controller !~ /^\//);
+  
    foreach (keys %{ $request }) {
       $c->request->parameters->{$_} = $request->{$_};
    }
@@ -98,7 +120,8 @@ sub prepare {
    $base->path_query($base_path);
    $c->request->base($base);
    
-   $c->stash->{'_parent'} = $request->{'parent'};
+   $c->stash->{'_parent'}  = $request->{'parent'};
+   $c->stash->{'_event'}   = $request->{'event'};
 }
 
 =head1 NAME
@@ -109,15 +132,22 @@ Catalyst::Engine::Wx - Catalyst wxPerl Engine
 
 A script using the Catalyst::Engine::Wx module might look like:
 
-    #!/usr/bin/perl -w
+   #!/usr/bin/perl -w
+   
+   BEGIN {  $ENV{CATALYST_ENGINE} = 'Wx' }
+   
+   use strict;
+   use lib '/path/to/MyApp/lib';
+   use MyApp;
+   use Catalyst::Log::Wx;
 
-    BEGIN {  $ENV{CATALYST_ENGINE} = 'Wx' }
+   App->log(Catalyst::Log::Wx->new);
+   
+   MyApp->setup;
 
-    use strict;
-    use lib '/path/to/MyApp/lib';
-    use MyApp;
-
-    MyApp->run;
+   MyApp->run({
+      bootstrap   => '/',
+   });
 
 =head1 DESCRIPTION
 
@@ -129,7 +159,10 @@ It will also allow you to replace html views with Wx views from which you
 can access the stash and deals with controllers just like in any other
 Catalyst application running a web engine.
 
-See the tests for more informations.
+See the tests and the demo application for more informations.
+
+You can now have a debug frame which allow you to reload your Wx views
+when they changed (thanks to Module::Reload).
 
 The following methods are for internal use despite that these don't start
 with the classical underscore.

@@ -14,7 +14,7 @@ sub new {
 
    my $self = $c->stash->{_parent};
    
-   ok (ref($self) eq 'TestAppWx::default', 'TestAppWx::default');
+#   ok (ref($self) eq 'TestAppWx::default', 'TestAppWx::default');
 
    EVT_QUIT;
    

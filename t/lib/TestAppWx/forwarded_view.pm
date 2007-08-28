@@ -5,20 +5,18 @@ use warnings;
 
 use Test::More;
 use Wx ':everything';
-use Catalyst::Engine::Wx::Event qw(EVT_QUIT);
+use Catalyst::Engine::Wx::Event qw(EVT_BUTTON EVT_CLOSE EVT);
 
 use base 'Wx::Frame';
 
 sub new {
    my ($class, $catalyst, $c ) = @_;
 
-   my $self = $class->SUPER::new( undef, -1, 'Test', [0, 0], [475,300] );
-   
-   $self->Show(0);
-   
+   my $self = $class->SUPER::new( $c->stash->{_parent}, -1, 'Test', [105,15],[140,30] );
+
    ok (ref($self) eq 'TestAppWx::forwarded_view', 'TestAppWx::forwarded_view');
    
-   EVT_QUIT;
+   EVT( $c->stash->{_parent}, '/shutdown' );
    
    return 1;
 }
