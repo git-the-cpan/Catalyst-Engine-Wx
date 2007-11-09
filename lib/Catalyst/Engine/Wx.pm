@@ -13,7 +13,7 @@ use Data::Dumper;
 use IO::String;
 use URI;
 
-our $VERSION = "0.02_02";
+our $VERSION = "0.02_03";
 
 my $uri_proto = URI->new();
 my $app;
@@ -57,6 +57,7 @@ sub run {
             },
          _stop       => sub {
                $_[KERNEL]->delay('_keepalive');
+#                exit;
             }
       }
    );
@@ -83,6 +84,13 @@ sub EVENT_REQUEST {
    $heap->{'class'}->handle_request($request);
 }
 
+sub finalize {
+    my ( $self, $c, $request ) = @_;
+
+    print "finalize request dude !!\n";
+
+}
+
 sub prepare {
    my ( $self, $c, $request ) = @_;
    
@@ -94,6 +102,7 @@ sub prepare {
          
       $controller =~ s/\->/\//g;
       $controller =~ s/::/\//g;
+
       $controller = lc($controller);
    }
    
@@ -132,44 +141,52 @@ Catalyst::Engine::Wx - Catalyst wxPerl Engine
 
 A script using the Catalyst::Engine::Wx module might look like:
 
-   #!/usr/bin/perl -w
-   
-   BEGIN {  $ENV{CATALYST_ENGINE} = 'Wx' }
-   
-   use strict;
-   use lib '/path/to/MyApp/lib';
-   use MyApp;
-   use Catalyst::Log::Wx;
+    #!/usr/bin/perl -w
 
-   App->log(Catalyst::Log::Wx->new);
-   
-   MyApp->setup;
+    BEGIN {  $ENV{CATALYST_ENGINE} = 'Wx' }
 
-   MyApp->run({
-      bootstrap   => '/',
-   });
+    use strict;
+    use lib '/path/to/MyApp/lib';
+    use MyApp;
+
+    MyApp->run;
+
+Combine it with the Catalyst-View-Wx and have Catalyst work
+with wxPerl interfaces.
 
 =head1 DESCRIPTION
 
 This is the Catalyst engine specialized for building non-blocking and
 multi-platforms desktop applications with the Catalyst framework. It
-allows to tie Wx events to Catalyst controllers asychronously.
+allows to tie Wx events to Catalyst controllers asynchronously.
 
 It will also allow you to replace html views with Wx views from which you
 can access the stash and deals with controllers just like in any other
 Catalyst application running a web engine.
 
-See the tests and the demo application for more informations.
+You can re-use many Plugins in the Catalyst namespace to authenticate, 
+deal with cache, store session data and so on.
 
-You can now have a debug frame which allow you to reload your Wx views
-when they changed (thanks to Module::Reload).
+See the tests for more informations.
+
+There is also a demo application included.
 
 The following methods are for internal use despite that these don't start
 with the classical underscore.
 
 =head2 run
 
-Creates the Catalyst POE session that will receive and deals with events.
+Creates the Catalyst engine that will receive and deals with events coming
+from your Wx classes.
+
+You can pass it a bootstrap parameter to inform the engine what controller
+holds the main window creation.
+
+    MyApp->run({
+	    bootstrap   => 'MyApp->main_window',
+    });
+
+Otherwise it will run the default action in the root controller.
 
 =head2 EVENT_REQUEST
 
@@ -179,9 +196,13 @@ Receive and event from the Wx views and send it in the Catalyst flow.
 
 Transform an event with parameters into a Catalyst request.
 
+=head2 finalize
+
+Finalize a request and trap errors to display an error message.
+
 =head1 AUTHORS
 
-Eriam Schaffter, C<eriam@cpan.org>
+Eriam Schaffter, C<eriam@cpan.org> and the Catalyst and wxPerl team.
 
 =head1 COPYRIGHT
 

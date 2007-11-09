@@ -4,6 +4,8 @@ use Test::More;
 BEGIN {
     eval { require Wx; };
     plan skip_all => 'Wx required for this test' if $@;
+    eval { require POE; };
+    plan skip_all => 'POE required for this test' if $@;
 }
 
 

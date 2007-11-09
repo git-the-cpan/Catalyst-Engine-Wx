@@ -5,10 +5,10 @@ use base 'Class::Accessor::Fast';
 use Data::Dump;
 use Wx qw[:everything];
 
-our $VERSION = "0.01_01";
+our $VERSION = "0.02_03";
 
 use Catalyst::Engine::Wx::Event qw(
-   EVT
+   CAT_EVT
 );
 
 our %LEVELS = ();
@@ -131,17 +131,15 @@ See L<Catalyst>.
 
 =head1 DESCRIPTION
 
-This module provides a debug frame for the Wx catalyst engine.
-
-From the debug frame you can also fire events.
+This module provides a log frame for the Wx catalyst engine.
 
 =head1 SEE ALSO
 
-L<Catalyst>.
+Catalyst.
 
 =head1 AUTHOR
 
-Eriam Schaffter, C<eriam@cpan.org>
+Eriam Schaffter, C<eriam@cpan.org> and the Catalyst and wxPerl team.
 
 =head1 COPYRIGHT
 

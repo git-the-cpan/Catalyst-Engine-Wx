@@ -1,4 +1,5 @@
-package SampleAppDB::BookAuthor;
+package # Hide from pause
+   SampleAppDB::BookAuthor;
 
 use base qw/DBIx::Class/;
 

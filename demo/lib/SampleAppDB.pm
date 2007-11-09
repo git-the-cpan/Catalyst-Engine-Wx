@@ -1,4 +1,5 @@
-package SampleAppDB;
+package # Hide from pause
+   SampleAppDB;
 
 # Our schema needs to inherit from 'DBIx::Class::Schema'
 use base qw/DBIx::Class::Schema/;

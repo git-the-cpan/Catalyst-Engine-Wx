@@ -1,20 +1,27 @@
-#use ExtUtils::MakeMaker;
-use inc::Module::Install;
+use strict;
+use warnings;
+use ExtUtils::MakeMaker;
 
-name 'Catalyst-Engine-Wx';
-author 'Eriam Schaffter <eriam@cpan.org>';
-license 'perl';
-version_from 'lib/Catalyst/Engine/Wx.pm';
-abstract_from 'lib/Catalyst/Engine/Wx.pm';
+WriteMakefile(
+    ( MM->can( 'signature_target' ) ? ( SIGN => 1 ) : () ),
+    NAME          => 'Catalyst::Engine::Wx',
+    AUTHOR        => 'Eriam Schaffter <eriam@cpan.org>',
+    VERSION_FROM  => 'lib/Catalyst/Engine/Wx.pm',
+    ABSTRACT_FROM => 'lib/Catalyst/Engine/Wx.pm',
+    LICENSE       => 'perl',
+    PL_FILES      => {},
+    PREREQ_PM     => {
+        'Test::More' => 0,
+        'version'    => 0,
+        'POE'               => '0.38',
+        'POE::Loop::Wx'     => '0.03',
+        'Alien::wxWidgets'  => 0,
+        'Wx'                => '0.67',
+        'Class::Inspector'  => 0,
+        'Module::Reload'    => 0,
+        'Catalyst'          => 0,
+    },
+    dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
+    clean => { FILES    => 'Catalyst-Engine-*' },
+);
 
-# Build the prerequisite list
-requires 'POE'              => '0.38';
-requires 'Wx'               => 0;
-#requires 'POE::Loop::Wx'    => '0.03';
-requires 'Alien::wxWidgets' => 0;
-requires 'Class::Inspector' => 0;
-requires 'Module::Reload'   => 0;
-requires 'Catalyst'         => 0;
-
-
-WriteAll();

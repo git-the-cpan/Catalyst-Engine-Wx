@@ -8,7 +8,7 @@ use base qw/Catalyst::View/;
 
 use Wx::Html;
 
-our $VERSION = '0.01_01';
+our $VERSION = "0.02_03";
 
 =head1 NAME
 

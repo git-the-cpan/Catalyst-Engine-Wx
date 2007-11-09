@@ -1,4 +1,5 @@
-package TestApp::Controller::Root;
+package # Hide from pause
+   TestApp::Controller::Root;
 
 use strict;
 use warnings;
@@ -48,7 +49,11 @@ sub forward : Local {
 }
 
 
-sub end : ActionClass('RenderView') {}
+sub end : Private {
+    my ( $self, $c ) = @_;
+
+    $c->forward('TestApp::View::Wx');
+}
 
 
 1;

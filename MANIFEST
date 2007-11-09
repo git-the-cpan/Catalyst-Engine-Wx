@@ -13,23 +13,18 @@ demo/lib/SampleAppWx/default.pm
 demo/lib/SampleAppWx/display.pm
 demo/sampleapp.db
 demo/wx.pl
-inc/Module/Install.pm
-inc/Module/Install/Base.pm
-inc/Module/Install/Can.pm
-inc/Module/Install/Fetch.pm
-inc/Module/Install/Makefile.pm
-inc/Module/Install/Metadata.pm
-inc/Module/Install/Win32.pm
-inc/Module/Install/WriteAll.pm
 lib/Catalyst/Engine/Wx.pm
 lib/Catalyst/Engine/Wx/Event.pm
+lib/Catalyst/Helper/View/WxApp.pm
 lib/Catalyst/Log/Wx.pm
+lib/Catalyst/Plugin/Session/State/Wx.pm
 lib/Catalyst/View/Wx.pm
 lib/Catalyst/View/WxHtmlEasyPrinting.pm
+lib/Catalyst/View/WxPrintout.pm
 Makefile.PL
-MANIFEST			This list of files
-META.yml
+MANIFEST
 README
+SIGNATURE
 t/0_load.t
 t/1_test_pod.t
 t/2_pod.t
@@ -43,3 +38,4 @@ t/lib/TestAppWx/default.pm
 t/lib/TestAppWx/forwarded_view.pm
 t/lib/TestAppWx/shutdown.pm
 t/lib/TestAppWx/textctrl.pm
+META.yml                                 Module meta-data (added by MakeMaker)

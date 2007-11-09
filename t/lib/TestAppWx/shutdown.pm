@@ -1,11 +1,12 @@
-package TestAppWx::shutdown;
+package # Hide from pause
+   TestAppWx::shutdown;
 
 use strict;
 use warnings;
 
 use Test::More;
 use Wx ':everything';
-use Catalyst::Engine::Wx::Event qw(EVT_QUIT);
+use Catalyst::Engine::Wx::Event qw(CAT_EVT_QUIT);
 
 use base 'Catalyst::View::Wx';
 
@@ -14,9 +15,7 @@ sub new {
 
    my $self = $c->stash->{_parent};
    
-#   ok (ref($self) eq 'TestAppWx::default', 'TestAppWx::default');
-
-   EVT_QUIT;
+   CAT_EVT_QUIT;
    
    return;
 }

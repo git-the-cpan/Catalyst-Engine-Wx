@@ -1,11 +1,12 @@
-package TestAppWx::forwarded_view;
+package # Hide from pause
+   TestAppWx::forwarded_view;
 
 use strict;
 use warnings;
 
 use Test::More;
 use Wx ':everything';
-use Catalyst::Engine::Wx::Event qw(EVT_BUTTON EVT_CLOSE EVT);
+use Catalyst::Engine::Wx::Event qw(CAT_EVT_BUTTON CAT_EVT_CLOSE CAT_EVT);
 
 use base 'Wx::Frame';
 
@@ -16,7 +17,7 @@ sub new {
 
    ok (ref($self) eq 'TestAppWx::forwarded_view', 'TestAppWx::forwarded_view');
    
-   EVT( $c->stash->{_parent}, '/shutdown' );
+   CAT_EVT( $c->stash->{_parent}, '/shutdown' );
    
    return 1;
 }

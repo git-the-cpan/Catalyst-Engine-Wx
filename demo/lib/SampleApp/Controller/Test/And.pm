@@ -1,4 +1,5 @@
-package SampleApp::Controller::Test::And;
+package # Hide from pause
+   SampleApp::Controller::Test::And;
 
 use strict;
 use warnings;

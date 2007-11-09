@@ -1,4 +1,5 @@
-package SampleApp::Model::SampleAppDB;
+package # Hide from pause
+   SampleApp::Model::SampleAppDB;
 
 use strict;
 use base 'Catalyst::Model::DBIC::Schema';

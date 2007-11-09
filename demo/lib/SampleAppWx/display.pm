@@ -1,4 +1,5 @@
-package SampleAppWx::display;
+package # Hide from pause
+   SampleAppWx::display;
 
 use strict;
 use warnings;

@@ -1,4 +1,5 @@
-package SampleApp::View::Wx;
+package # Hide from pause
+   SampleApp::View::Wx;
 
 use strict;
 use base 'Catalyst::View::Wx';

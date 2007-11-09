@@ -1,11 +1,12 @@
-package TestAppWx::default;
+package # Hide from pause
+   TestAppWx::default;
 
 use strict;
 use warnings;
 
 use Test::More;
 use Wx ':everything';
-use Catalyst::Engine::Wx::Event qw(EVT);
+use Catalyst::Engine::Wx::Event qw(CAT_EVT);
 
 use base 'Wx::Frame';
 
@@ -18,7 +19,7 @@ sub new {
    
    ok (ref($self) eq 'TestAppWx::default', 'TestAppWx::default');
    
-   EVT( $self, '/textctrl' );
+   CAT_EVT( $self, '/textctrl' );
    
    return 1;
 }

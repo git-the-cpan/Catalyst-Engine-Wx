@@ -1,4 +1,5 @@
-package TestApp;
+package # Hide from pause
+   TestApp;
 
 use strict;
 use warnings;

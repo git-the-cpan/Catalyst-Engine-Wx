@@ -11,7 +11,7 @@ use Class::Inspector;
 use Module::Reload; 
 use Data::Dumper;
 
-our $VERSION = '0.01_01';
+our $VERSION = "0.02_03";
 
 =head1 NAME
 
@@ -41,14 +41,29 @@ sub process {
    
    if ($c->stash->{'_displayed'} != 1) {
       
-      my $module = $c->stash->{class} || $c->action;
+      my $module;
+      my $method = 'new';
+
+      $module = $c->stash->{class} || $c->action;
+      
+      if (ref($module) eq 'ARRAY') {
+         my $tmpmodule = shift(@{$module});
+         $method = shift(@{$module});
+          $module = $tmpmodule;
+      }
+      elsif ($module =~ /->/) {
+        ($module, $method) = split (/->/, $module);
+      }
+
+      $c->log->info("View is processing: $module -> $method");
+
       $module =~ s/\//::/g;
       
       if (defined $self->config->{NAMESPACE}) {
          $module = $self->config->{NAMESPACE}.'::'.$module;
       }
       
-      if ($ENV{CATALYST_DEBUG}) {
+      if ($self->config->{DEBUG}) {
          Module::Reload->check;
       }
       
@@ -56,9 +71,9 @@ sub process {
          require Class::Inspector->filename($module);
       }
       
-      if (my $code = $module->can('new')) {
+      if (my $code = $module->can($method)) {
          eval { $code->($module, @_); };
-         print $@ if $@;
+         $c->log->debug($@) if $@;
       }
    
       $c->stash->{'_displayed'} = 1;
