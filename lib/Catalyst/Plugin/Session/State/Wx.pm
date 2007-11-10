@@ -6,7 +6,7 @@ use warnings;
 
 use next;
 
-our $VERSION = "0.02_03";
+our $VERSION = "0.02_04";
 
 BEGIN { __PACKAGE__->mk_accessors(qw/_deleted_session_id/) }
 

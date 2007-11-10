@@ -13,7 +13,7 @@ use Data::Dumper;
 use IO::String;
 use URI;
 
-our $VERSION = "0.02_03";
+our $VERSION = "0.02_04";
 
 my $uri_proto = URI->new();
 my $app;
@@ -87,8 +87,7 @@ sub EVENT_REQUEST {
 sub finalize {
     my ( $self, $c, $request ) = @_;
 
-    print "finalize request dude !!\n";
-
+#    print "finalize request dude !!\n";
 }
 
 sub prepare {

@@ -11,7 +11,7 @@ use Class::Inspector;
 use Module::Reload; 
 use Data::Dumper;
 
-our $VERSION = "0.02_03";
+our $VERSION = "0.02_04";
 
 =head1 NAME
 

@@ -3,7 +3,7 @@ package Catalyst::Helper::View::WxApp;
 use strict;
 use File::Spec;
 
-our $VERSION = "0.02_03";
+our $VERSION = "0.02_04";
 
 sub mk_compclass {
     my ( $self, $helper, @args ) = @_;
@@ -61,6 +61,12 @@ Catalyst::Helper::View::WxApp - Helper for Wx view which builds a skeleton wxPer
 If you have a RenderView make sure it does not try to render other views 
 before the Wx one.
 
+Then after simply do a 
+
+    perl script/myapp_wx.pl
+
+and you should get started.
+
 Have fun !
 
 =head1 DESCRIPTION
@@ -68,6 +74,8 @@ Have fun !
 This helper module creates a Wx View module.  It goes further than
 Catalyst::Helper::View::Wx in that it creates a folder to hold 
 your Wx classes.
+
+It also build 
 
 =head2 METHODS
 
@@ -235,8 +243,6 @@ require [% app %];
 use Catalyst::Log::Wx;
 
 [% app %]->log(Catalyst::Log::Wx->new);
-
-[% app %]->setup;
 
 [% app %]->run({
    bootstrap   => 'Root->default',

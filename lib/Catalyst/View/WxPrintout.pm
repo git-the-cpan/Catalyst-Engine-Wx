@@ -8,7 +8,7 @@ use base qw/Catalyst::View/;
 
 use Wx::Print;
 
-our $VERSION = "0.02_03";
+our $VERSION = "0.02_04";
 
 =head1 NAME
 
@@ -47,9 +47,9 @@ sub process {
     }
 
     
-    $printer->Print( undef, $printout, 0 );
-    
-    $printout->Destroy;
+#    $printer->Print( undef, $printout, 0 );
+#    
+#    $printout->Destroy;
 
     return; 
 }

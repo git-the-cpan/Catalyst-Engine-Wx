@@ -16,7 +16,7 @@ Hash: SHA1
 
 SHA1 da39a3ee5e6b4b0d3255bfef95601890afd80709 Changes
 SHA1 b44cb966f8609da4d89dfbe75858c56f2b6d883b MANIFEST
-SHA1 bd6133368dde8fb209008db6ca8fe0512ed28e33 META.yml
+SHA1 10bf786dd688c0cece360ed71b08c42354e9e123 META.yml
 SHA1 8b3ff958d84987218392c8372b0c490966f602da Makefile.PL
 SHA1 018fde0bb5b6181fc24d816b6c031275a80ba535 README
 SHA1 dc0e30c9794ae6fbdfc25de4e70ed8f276ff4a99 demo/lib/MyAppDB.pm
@@ -33,14 +33,14 @@ SHA1 f636c77b04b3f9a74e0a37f3d1ce238a5007c443 demo/lib/SampleAppWx/default.pm
 SHA1 ac48431b962f29aa018d7bcdfff9fb925d3623fc demo/lib/SampleAppWx/display.pm
 SHA1 57c618b100aeed1b0c6e9a70647168b3b93ad78e demo/sampleapp.db
 SHA1 57fae469681d7ea1bdf9ed3c1d5ffb841fd51def demo/wx.pl
-SHA1 2e247cacd70043963e860e497d60d4e9fd8e1084 lib/Catalyst/Engine/Wx.pm
-SHA1 e9dbf604735dce68ed23d6cd1d00ade6aa99ec5c lib/Catalyst/Engine/Wx/Event.pm
-SHA1 f7b813a0bf21608e47d04bd7d65454521d51b610 lib/Catalyst/Helper/View/WxApp.pm
-SHA1 0a93b75bf647fb4ecaa62a82130dcd59c98353b4 lib/Catalyst/Log/Wx.pm
-SHA1 4f4b96bc34ffd67c5de0b835f8982557e33a1969 lib/Catalyst/Plugin/Session/State/Wx.pm
-SHA1 76530d42b56e15475f748aa85c8e2dcfad3b12a9 lib/Catalyst/View/Wx.pm
-SHA1 2c9a57883b27ec46df71a16042be31b507b24b5a lib/Catalyst/View/WxHtmlEasyPrinting.pm
-SHA1 6589cc110be5d700723ce233a4a50c5e98913101 lib/Catalyst/View/WxPrintout.pm
+SHA1 2c6ac1566247371b28482769590f5b9a24fd5ca3 lib/Catalyst/Engine/Wx.pm
+SHA1 cba2ad1db7b97df6ebad9d9d36e5aee9fd9c4cef lib/Catalyst/Engine/Wx/Event.pm
+SHA1 c705b6da2a1224e7a464b452a186302b199ea079 lib/Catalyst/Helper/View/WxApp.pm
+SHA1 5339b30226a732e1dc395b7fc1a95c330489cac0 lib/Catalyst/Log/Wx.pm
+SHA1 29c49b225513af7e83ae101f3cb00936f3a35b53 lib/Catalyst/Plugin/Session/State/Wx.pm
+SHA1 37198310a5ca02cc8deb5f9b48006aafa6fb0bfd lib/Catalyst/View/Wx.pm
+SHA1 d8879a39cd63862b75fc43e836f618dee0927e74 lib/Catalyst/View/WxHtmlEasyPrinting.pm
+SHA1 7779ff26175a5910d03d26672713476c760f489b lib/Catalyst/View/WxPrintout.pm
 SHA1 c8c022850a27c0cb2a0b282a10186177f5944fc3 t/0_load.t
 SHA1 2d0bc351d2899d795acda5b9edb3fd9cd2531762 t/1_test_pod.t
 SHA1 da83c5c7cc4a33f6136b37036359dedd6b28b11f t/2_pod.t
@@ -57,7 +57,7 @@ SHA1 910b6767c5d1be2f552ee8ce64545683dbfb8672 t/lib/TestAppWx/textctrl.pm
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.5 (FreeBSD)
 
-iD8DBQFHNKq3TJ+A8YDqKz8RAsXAAJ4tginBKZnrvudcIam+U8758FE4hQCfd1a+
-jeeCtiL+yr0wSjx82IK0UFE=
-=0OdQ
+iD8DBQFHNeeUTJ+A8YDqKz8RAj4wAJ9+MZ01l6DqHRywu9ZiSJSQ2yhgyACfYhAT
+ZxpYNZtQW/8cWd/NT5QwnfU=
+=erRs
 -----END PGP SIGNATURE-----
