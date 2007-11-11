@@ -3,7 +3,7 @@ package Catalyst::Helper::View::WxApp;
 use strict;
 use File::Spec;
 
-our $VERSION = "0.02_04";
+our $VERSION = "0.02_05";
 
 sub mk_compclass {
     my ( $self, $helper, @args ) = @_;

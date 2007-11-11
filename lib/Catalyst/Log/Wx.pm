@@ -5,7 +5,7 @@ use base 'Class::Accessor::Fast';
 use Data::Dump;
 use Wx qw[:everything];
 
-our $VERSION = "0.02_04";
+our $VERSION = "0.02_05";
 
 use Catalyst::Engine::Wx::Event qw(
    CAT_EVT

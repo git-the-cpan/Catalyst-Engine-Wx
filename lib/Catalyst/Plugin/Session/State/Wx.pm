@@ -4,9 +4,9 @@ use base qw/Catalyst::Plugin::Session::State Class::Accessor::Fast/;
 use strict;
 use warnings;
 
-use next;
+use NEXT;
 
-our $VERSION = "0.02_04";
+our $VERSION = "0.02_05";
 
 BEGIN { __PACKAGE__->mk_accessors(qw/_deleted_session_id/) }
 
