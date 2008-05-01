@@ -48,28 +48,38 @@ __PACKAGE__->mk_accessors('frame');
 sub new {
     my $class = shift;
     my $self  = $class->SUPER::new;
+    
+    
+    print "new \n";
+     my $locale = Wx::Locale->new( Wx::Locale::GetSystemLanguage );
+   Wx::InitAllImageHandlers();
+my   $app = Wx::SimpleApp->new;
+eval {
     $self->levels( scalar(@_) ? @_ : keys %LEVELS );
-
-   $self->frame(Wx::Frame->new( undef, -1, 'Catalyst::Log::Wx', wxDefaultPosition, [600,400], wxDEFAULT_FRAME_STYLE ));
-   $self->frame->{reloader} = Wx::TextCtrl->new($self->frame, -1, "", wxDefaultPosition, wxDefaultSize, );
-   $self->frame->{logger} = Wx::TextCtrl->new($self->frame, -1, "", wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY);
-
+    $self->frame(Wx::Frame->new( undef, -1, 'Catalyst::Log::Wx', wxDefaultPosition, [600,400], wxDEFAULT_FRAME_STYLE ));
+##   $self->frame->{reloader} = Wx::TextCtrl->new($self->frame, -1, "", wxDefaultPosition, wxDefaultSize, );
+    $self->frame->{logger} = Wx::TextCtrl->new($self->frame, -1, "", wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY);
+#
     my $log = Wx::LogTextCtrl->new( $self->frame->{logger} );
     $self->frame->{old_log} = Wx::Log::SetActiveTarget( $log );
-
-	$self->frame->{sizer_2} = Wx::BoxSizer->new(wxVERTICAL);
-	$self->frame->{sizer_2}->Add($self->frame->{reloader}, 0, wxEXPAND, 0);
-	$self->frame->{sizer_2}->Add($self->frame->{logger}, 4, wxEXPAND, 0);
-	$self->frame->SetSizer($self->frame->{sizer_2});
-	$self->frame->{sizer_2}->Fit($self->frame);
-	$self->frame->Layout();
-
-	Wx::Event::EVT_TEXT_ENTER($self->frame, $self->frame->{reloader}->GetId, \&_reload);
-
-	$self->frame->SetSize(Wx::Size->new(600, 400));
-	$self->frame->{logger}->SetFont(Wx::Font->new(8, wxMODERN, wxNORMAL, wxNORMAL, 0, ""));
-
-	$self->frame->Show(1);    
+#
+#	$self->frame->{sizer_2} = Wx::BoxSizer->new(wxVERTICAL);
+#	$self->frame->{sizer_2}->Add($self->frame->{reloader}, 0, wxEXPAND, 0);
+#	$self->frame->{sizer_2}->Add($self->frame->{logger}, 4, wxEXPAND, 0);
+#	$self->frame->SetSizer($self->frame->{sizer_2});
+#	$self->frame->{sizer_2}->Fit($self->frame);
+#	$self->frame->Layout();
+#
+##	Wx::Event::EVT_TEXT_ENTER($self->frame, $self->frame->{reloader}->GetId, \&_reload);
+#
+#	$self->frame->SetSize(Wx::Size->new(600, 400));
+#	$self->frame->{logger}->SetFont(Wx::Font->new(8, wxMODERN, wxNORMAL, wxNORMAL, 0, ""));
+#
+	$self->frame->Show(1)
+        if $ENV{CATALYST_DEBUG} == 1;    
+    };
+    
+    print "done \n";
     
     return $self;
 }
@@ -100,17 +110,24 @@ sub _log {
     my $level   = shift;
     my $message = join( "\n", @_ );
     chomp($message);
-
-    $self->frame->{logger}->WriteText($message."\n");
+eval {
+    if ($level eq 'error' or $level eq 'fatal') {
+        Wx::MessageBox($message, $level);   
+    }
+    else {
+    $self->frame->{logger}->WriteText($message."\n") 
+        if $ENV{CATALYST_DEBUG} == 1;
+    }
+    };
 }
 
-sub _reload {
-	my ($self, $event) = @_;
-	
-   EVT($self, $self->{reloader}->GetValue);
-
-	$event->Skip;
-}
+#sub _reload {
+#	my ($self, $event) = @_;
+#	
+#   EVT($self, $self->{reloader}->GetValue);
+#
+#	$event->Skip;
+#}
 1;
 
 __END__

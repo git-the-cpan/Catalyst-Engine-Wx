@@ -6,8 +6,6 @@ no strict 'refs';
 
 use base qw/Catalyst::View/;
 
-use Wx::Html;
-
 our $VERSION = "0.02_05";
 
 =head1 NAME
@@ -18,8 +16,14 @@ Catalyst::View::WxHtmlEasyPrinting - WxHtmlEasyPrinting View Class
 
 =cut
 sub new {
-   my ( $class, $c, $arguments ) = @_;
+    my ( $class, $c, $arguments ) = @_;
     my $self = bless {}, $class;
+
+    if ($ENV{CATALYST_ENGINE} eq 'Wx') {
+	eval {
+	    require Wx::Html;
+	};
+    }
 
     return $self;
 }

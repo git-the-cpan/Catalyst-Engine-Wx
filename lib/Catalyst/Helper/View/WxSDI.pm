@@ -1,4 +1,4 @@
-package Catalyst::Helper::View::WxApp;
+package Catalyst::Helper::View::WxSDI;
 
 use strict;
 use File::Spec;
@@ -32,13 +32,14 @@ sub mk_templates {
 
 =head1 NAME
 
-Catalyst::Helper::View::WxApp - Helper for Wx view which builds a skeleton wxPerl application
+Catalyst::Helper::View::WxSDI - Helper for Wx view which builds a skeleton for a SDI 
+wxPerl application
 
 =head1 SYNOPSIS
 
 # use the helper to create the view module and templates
 
-    $ script/myapp_create.pl view Wx WxApp
+    $ script/myapp_create.pl view Wx WxSDI
 
 # add something like the following to your main application module
 
@@ -71,10 +72,9 @@ Have fun !
 
 =head1 DESCRIPTION
 
-This helper module creates a Wx View module. It creates also 
-a sample window with some controls to get you started.
-
-You can also use other helpers to get other applications skeletons. 
+This helper module creates a Wx View module.  It goes further than
+Catalyst::Helper::View::WxApp in that it creates for you a window
+with a menu, status bar and a few other things to get you started.
 
 It also build 
 
@@ -171,20 +171,22 @@ sub new {
     
     # We create the parent window
     my $self = $class->SUPER::new( undef, -1, 'Default', [0, 0], [475,300] );
-    
-    # An input text box
-    # if we give a name to the wx object we can get the parameter value 
-    # in the controller with that name
-	$self->{message} = Wx::TextCtrl->new($self, -1, "", 
-	    wxDefaultPosition, wxDefaultSize, 0, 
-	    wxDefaultValidator, 'message'); 
-    
-    # You can set the name of the object like this also 
-    $self->{message}->SetName('message');
-    
-    # A button to display a dialog box   
-    $self->{button} = Wx::Button->new($self, -1, "Click me !");
-    
+
+	# Menu Bar
+	$self->{menubar} = Wx::MenuBar->new();
+	my $wxglade_tmp_menu = Wx::Menu->new();
+	$wxglade_tmp_menu->Append(wxID_EXIT, "Exit", "");
+	$self->{menubar}->Append($wxglade_tmp_menu, "File");
+	$wxglade_tmp_menu = Wx::Menu->new();
+	$wxglade_tmp_menu->Append(wxID_ABOUT, "About ..", "");
+	$self->{menubar}->Append($wxglade_tmp_menu, "Help");
+	$self->SetMenuBar( $self->{menubar} );
+
+    # Status Bar
+	$self->{statusbar} = $self->CreateStatusBar(1, 0);    
+ 	$self->{statusbar}->SetStatusWidths(-1);
+	$self->{statusbar}->SetStatusText('Status Bar Text', 0) 	
+
     # Sizing stuff
 	$self->{sizer_1} = Wx::BoxSizer->new(wxVERTICAL);
 	$self->{sizer_1}->Add($self->{message}, 0, wxEXPAND, 0);
@@ -198,19 +200,19 @@ sub new {
     $self->Show(1);
    
     # Log something just in case
-    Wx::LogMessage( "Welcome to Catalyst::Engine::Wx !" );
-    
-    # Attach events
-    CAT_EVT_BUTTON( $self, $self->{button}, 'Root->hello_world');
-    
+    Wx::LogMessage( "Welcome to [% app %] powered by Catalyst::Engine::Wx !" );
+   
+    # Events are there bro 
+    CAT_EVT_MENU( $self, wxID_ABOUT, 'Root->about' );
+    CAT_EVT_MENU( $self, wxID_EXIT, sub { CAT_EVT_QUIT; } ); 
     CAT_EVT_CLOSE( $self, sub { CAT_EVT_QUIT; } );
     
     return 1;
 }
 
 1;
-__Hello__
-package [% app %]Wx::Hello;
+__About__
+package [% app %]Wx::About;
 
 use strict;
 use warnings;
@@ -220,7 +222,9 @@ use Wx ':everything';
 sub new {
    my ($class, $catalyst, $c ) = @_;
 
-   Wx::MessageBox($c->stash->{message}, 'Hello' );
+   Wx::MessageBox( "[% app %], (c) [% author %] \n" .
+                    "wxPerl $Wx::VERSION, " . wxVERSION_STRING,
+                    "About FileZ", wxOK|wxCENTRE, $self );
 }
 
 1;
@@ -238,7 +242,7 @@ use lib "$FindBin::Bin/../lib";
 use strict;
 use warnings;
 
-#use Wx qw[ :everything ]; 
+use Wx qw[ :everything ]; 
 
 require [% app %];
 use Catalyst::Log::Wx;

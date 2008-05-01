@@ -4,7 +4,7 @@ package # Hide from pause
 use strict;
 use warnings;
 
-use Wx ':everything';
+#use Wx ':everything';
 
 sub new {
    my ($class, $catalyst, $c ) = @_;

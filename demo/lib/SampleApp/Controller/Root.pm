@@ -13,7 +13,8 @@ sub default : Private {
    
    $c->stash->{books} = [$c->model('SampleAppDB::Book')->all];
    
-   $c->forward('SampleApp::View::Wx');    
+   $c->forward( $c->component('Wx') );    
 }
+
 
 1;

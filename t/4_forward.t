@@ -29,8 +29,11 @@ TestApp->config(
 
 TestApp->setup;
 
-TestApp->run({
-   bootstrap   => '/forward',
-});
+
+TestApp->run('forward');
+
+#TestApp->run({
+#   bootstrap   => '/forward',
+#});
 
 1;

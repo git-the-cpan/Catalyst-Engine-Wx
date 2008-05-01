@@ -11,7 +11,7 @@ BEGIN {
 plan tests => 7;
 
 BEGIN { 
-    use lib "t/lib/";
+    use lib "./t/lib/";
 
     $ENV{CATALYST_ENGINE} ||= 'Wx';
     require Catalyst::Engine::Wx;

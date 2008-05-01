@@ -11,7 +11,7 @@ use Class::Inspector;
 use Module::Reload; 
 use Data::Dumper;
 
-our $VERSION = "0.02_05";
+our $VERSION = "0.02_06";
 
 =head1 NAME
 
@@ -41,41 +41,81 @@ sub process {
    
    if ($c->stash->{'_displayed'} != 1) {
       
-      my $module;
-      my $method = 'new';
-
-      $module = $c->stash->{class} || $c->action;
+      my $module  = $c->stash->{class}
+                     || $c->stash->{template}
+                     || $c->action;
+      my $method  = 'new';
+      my $code;
+      
+      $module =~ s/\//::/g if $module =~ /\//;
       
       if (ref($module) eq 'ARRAY') {
          my $tmpmodule = shift(@{$module});
          $method = shift(@{$module});
-          $module = $tmpmodule;
+         $module = $tmpmodule;
       }
       elsif ($module =~ /->/) {
-        ($module, $method) = split (/->/, $module);
+         ($module, $method) = split (/->/, $module);
+      }
+      elsif ($module =~ /::/) {
+         my (@module_name) = split (/::/, $module);
+         $method = pop @module_name;
+         $module = join ('::', @module_name);
       }
 
-      $c->log->info("View is processing: $module -> $method");
+      if ($c->stash->{'_parent'}) {
+      
+         #$c->log->info(" _parent ".$c->stash->{'_parent'} );
+         #
+         #print "trying to run method $module of parent \n";
+         
+         if ($code = $c->stash->{'_parent'}->can($module)) {
+            eval { $code->($c->stash->{'_parent'}, @_); };
+            $c->log->debug($@) if $@;
+            print $@ if $@;
+         }
+         elsif ($code = $c->stash->{'_parent'}->can($method)) {
+            eval { $code->($c->stash->{'_parent'}, @_); };
+            $c->log->debug($@) if $@;
+            print $@ if $@;
+         }
+         else {
+            $c->log->debug(ref($c->stash->{'_parent'})." does not implement ".$module);
+            Wx::MessageBox("The package ".ref($c->stash->{'_parent'})." does not \nimplement the method '".$module."' !", 'Error');
+         }      
+      
+      }
+      else {
+         
 
-      $module =~ s/\//::/g;
-      
-      if (defined $self->config->{NAMESPACE}) {
-         $module = $self->config->{NAMESPACE}.'::'.$module;
-      }
-      
-      if ($self->config->{DEBUG}) {
-         Module::Reload->check;
-      }
-      
-      unless (Class::Inspector->loaded($module)) {
-         require Class::Inspector->filename($module);
-      }
-      
-      if (my $code = $module->can($method)) {
-         eval { $code->($module, @_); };
-         $c->log->debug($@) if $@;
-      }
    
+         #print ("View is processing: $module -> $method \n");
+         #$c->log->info("View is processing: $module -> $method");
+   
+      
+         if (defined $self->config->{NAMESPACE}) {
+            $module = $self->config->{NAMESPACE}.'::'.$module;
+         }
+         
+         if ($self->config->{DEBUG}) {
+            Module::Reload->check;
+         }
+         
+         unless (Class::Inspector->loaded($module)) {
+            require Class::Inspector->filename($module);
+         }
+
+         if ($code = $module->can($method)) {
+            eval { $code->($module, @_); };
+            $c->log->debug($@) if $@;
+            print $@ if $@;
+         }
+         else {
+            $c->log->debug($module." does not implement ".$method);
+         }      
+        
+      }
+
       $c->stash->{'_displayed'} = 1;
    }
    return; 

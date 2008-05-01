@@ -1,9 +1,11 @@
 --- #YAML:1.0
 name:                Catalyst-Engine-Wx
-version:             0.02_05
+version:             0.02_06
 abstract:            Catalyst wxPerl Engine
 license:             perl
-generated_by:        ExtUtils::MakeMaker version 6.36
+author:              
+    - Eriam Schaffter <eriam@cpan.org>
+generated_by:        ExtUtils::MakeMaker version 6.44
 distribution_type:   module
 requires:     
     Alien::wxWidgets:              0
@@ -16,7 +18,5 @@ requires:
     version:                       0
     Wx:                            0.67
 meta-spec:
-    url:     http://module-build.sourceforge.net/META-spec-v1.2.html
-    version: 1.2
-author:
-    - Eriam Schaffter <eriam@cpan.org>
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3

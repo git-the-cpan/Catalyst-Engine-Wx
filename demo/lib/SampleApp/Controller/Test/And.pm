@@ -9,7 +9,8 @@ use Test::More;
 sub display : Local {
    my ( $self, $c ) = @_;
    
-   $c->stash->{class} = 'display';
-   $c->forward('SampleApp::View::Wx');
+   #$c->stash->{class} = 'display';
+   
+   $c->forward( $c->component('Wx') );    
 }
 1;

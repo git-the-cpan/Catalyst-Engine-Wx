@@ -6,9 +6,9 @@ use warnings;
 
 use Wx ':everything';
 use Catalyst::Engine::Wx::Event qw(
-   EVT_QUIT
-   EVT_CLOSE
-   EVT_LIST_ITEM_ACTIVATED
+   CAT_EVT_QUIT
+   CAT_EVT_CLOSE
+   CAT_EVT_LIST_ITEM_ACTIVATED
 );
 
 use base 'Wx::Frame';
@@ -49,12 +49,20 @@ sub new {
    
    Wx::LogMessage( "Welcome to Catalyst::Engine::Wx !" );
    
-   EVT_LIST_ITEM_ACTIVATED( $self, $list_ctrl, 'Test::And->display' );
-   EVT_CLOSE( $self, sub { EVT_QUIT; } );
+   CAT_EVT_LIST_ITEM_ACTIVATED( $self, $list_ctrl, 'Test::And->display' );
+   CAT_EVT_CLOSE( $self, sub { CAT_EVT_QUIT; } );
    
    return 1;
 }
 
 
+
+sub display {
+   my ($self, $catalyst, $c ) = @_;
+
+   print " method display of $self !! \n";
+
+   Wx::MessageBox('Hello world', 'Hello' );
+}
 
 1;

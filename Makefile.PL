@@ -3,7 +3,6 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    ( MM->can( 'signature_target' ) ? ( SIGN => 1 ) : () ),
     NAME          => 'Catalyst::Engine::Wx',
     AUTHOR        => 'Eriam Schaffter <eriam@cpan.org>',
     VERSION_FROM  => 'lib/Catalyst/Engine/Wx.pm',

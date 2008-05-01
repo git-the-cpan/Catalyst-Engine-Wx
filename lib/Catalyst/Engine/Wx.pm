@@ -13,7 +13,7 @@ use Data::Dumper;
 use IO::String;
 use URI;
 
-our $VERSION = "0.02_05";
+our $VERSION = "0.02_06";
 
 my $uri_proto = URI->new();
 my $app;
@@ -30,9 +30,15 @@ sub new {
 
 sub run {
    my ( $self, $class, $options ) = @_;
-   
-   $options ||= {};
-   $self->{bootstrap}  = delete $options->{bootstrap} || '/';
+
+   if (ref($options) ne 'HASH' && defined $options) {
+      $self->{bootstrap} = $options;
+      $options = {};
+   }
+   else {
+      $options ||= {};
+      $self->{bootstrap}  = delete $options->{bootstrap} || '/';
+   }
    
    POE::Session->create(
       object_states => [
@@ -57,7 +63,6 @@ sub run {
             },
          _stop       => sub {
                $_[KERNEL]->delay('_keepalive');
-#                exit;
             }
       }
    );
@@ -65,6 +70,7 @@ sub run {
    my $locale = Wx::Locale->new( Wx::Locale::GetSystemLanguage );
    Wx::InitAllImageHandlers();
    $app = Wx::SimpleApp->new;
+
     
    POE::Kernel->loop_run();
    POE::Kernel->run();
@@ -87,13 +93,14 @@ sub EVENT_REQUEST {
 sub finalize {
     my ( $self, $c, $request ) = @_;
 
-#    print "finalize request dude !!\n";
 }
 
 sub prepare {
    my ( $self, $c, $request ) = @_;
    
    my $controller = $request->{'controller'} || '/';
+
+   print "controller $controller \n";
 
    if ($controller =~ /\->/) {
       $controller =~ s/^Root//g 

@@ -31,14 +31,14 @@ sub event_with_params : Local {
         
     }
        
-    $c->stash->{class} = 'shutdown'; 
+    $c->stash->{template} = 'shutdown'; 
 }
 
 sub shutdown : Local {
     my ( $self, $c ) = @_;
-    
 
-#    $c->stash->{class} = 'shutdown'; 
+    $c->log->info('controller shut down ..');    
+
 }
 
 sub forward : Local {
